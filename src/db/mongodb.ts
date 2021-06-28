@@ -13,6 +13,7 @@ export const makeConnection = async () => {
 			{
 				useNewUrlParser: true,
 				useUnifiedTopology: true,
+				// feel free to change this to true if u use fineOneAndUpdate()
 				useFindAndModify: false,
 				useCreateIndex: true,
 			}
@@ -21,6 +22,10 @@ export const makeConnection = async () => {
 			log.info(`[${process.env.NODE_ENV}]` + '📀 Connected to Database')
 		})
 		.catch((error: Error) => {
-			log.error(`There was an error while connecting to database`, error)
+			log.error(
+				`There was an error while connecting to database. 
+			You likely forgot to include mongoDB connection URL or it is invalid.`,
+				error
+			)
 		})
 }

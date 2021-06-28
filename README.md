@@ -20,7 +20,8 @@ List of Packages used :
 
 ## Environment Variables
 
-To run this project, you will need to add the following environment variables to your .env file
+To run this project, you will need to add the following environment variables to your .env file.
+Create a .env file in root of the project. (Adjacent to package.json)
 
 `PORT` : The port that express will serve on. It's set to 5000 by default.
 
