@@ -16,8 +16,6 @@ List of Packages used :
   to warn user, write `log.warn("Foo Bar")`
   methods available on `log` are `warn, info, error, http`
 - nodemailer : Package used to sending Emails using SMTP protocols. Function to send emails is in `config/emailOptions.ts`
-  `sendMail` requires
-  `from : person who is sending email, to : person to which email is sent, subject : subject of email, html: html to send in email.`
 - yup : validation library. Example of usage can be found at `validation/AuthValidation.ts`
 
 ## Environment Variables
@@ -184,7 +182,8 @@ But for typescript support please mention that its a `AuthRequest`
 
 `import {AuthRequest} from 'types/RequestWithAuth'`
 
-If you get error saying `Property user `
+If you get error saying `Property user does not exists on type Request<ParamsDirectory etc>`
+you likely forgot to mention type of req. Fix this by giving req a type of `AuthRequest` as shown below.
 
 ```js
 app.get('/student-info', (req : AuthRequest, res:Response)=>{
@@ -261,6 +260,24 @@ sendEmail(options : IEmailOptions) {
 //
 }
 
+and use it like this :
+
+```js
+try {
+	sendEmail({
+		from: 'Sushil From Neog <sushil@neog.camp>',
+		subject: 'Hey you made it !',
+		to: 'neog_user@gmail.com',
+		html: `<h1> Congrats ! </h1>`,
+		cc: 'Admin <admin@neog.camp>',
+	})
+} catch (error) {
+	res.json({
+		msg: 'Oh no',
+	})
+}
+```
+
 | Parameter | Type     | Description                                                                    |
 | :-------- | :------- | :----------------------------------------------------------------------------- |
 | `from`    | `string` | **Required**. Who is sending email. for eg Person <person@example.com>         |
@@ -270,3 +287,4 @@ sendEmail(options : IEmailOptions) {
 | `cc`      | `string` | **Optional** Send carbon copy to someone. Email goes as a value.               |
 
 Ping me if you have any other Scenarios.
+Feel free to make any changes to how functions are declared/structured etc or use syntax you are familiar with.
