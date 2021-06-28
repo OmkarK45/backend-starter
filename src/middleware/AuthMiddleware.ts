@@ -1,11 +1,12 @@
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { User } from '../models/User'
+import { AuthRequest } from '../types/RequestWithUser'
 import { TokenUser } from '../utils/authUtils'
 import log from '../utils/logger'
 
 export async function requiresAuth(
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction
 ) {
@@ -29,8 +30,8 @@ export async function requiresAuth(
 
 	try {
 		const decodedUser = <TokenUser>jwt.verify(token, process.env.JWT_SECRET!)
-
-		const user = await User.findById(decodedUser._id)
+		console.log(decodedUser)
+		const user = await User.findById(decodedUser.sub)
 
 		log.info(user)
 
