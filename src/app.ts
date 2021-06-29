@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import { corsOptions } from './config/corsOptions'
 import log from './utils/logger'
 import { makeConnection } from './db/mongodb'
+import path from 'path'
 dotenv.config()
 
 makeConnection()
@@ -14,6 +15,8 @@ const app: Application = express()
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use(cookieParser())
+app.use(express.static(path.join(__dirname, '..', 'next-app', 'out')))
+
 /**
  * Route Configuration
  * */
@@ -44,11 +47,15 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 /**
  * Boots the app on PORT mentioned in .env
  * */
-app.listen(process.env.PORT, () => {
-	log.info(`[server] ->🚀 started on ${process.env.PORT}`)
-	log.warn(`⚠️ Make sure to use "yarn serve" in production.`)
-	log.info(`[${process.env.NODE_ENV}] -> http://localhost:${process.env.PORT}`)
-})
+// if (process.env.NODE_ENV === 'development') {
+// 	app.listen(process.env.PORT, () => {
+// 		log.info(`[server] ->🚀 started on ${process.env.PORT}`)
+// 		log.warn(`⚠️ Make sure to use "yarn serve" in production.`)
+// 		log.info(
+// 			`[${process.env.NODE_ENV}] -> http://localhost:${process.env.PORT}`
+// 		)
+// 	})
+// }
 
 /**
  * This helps us debug better incase of unhandledRejection of any promise.
@@ -63,3 +70,5 @@ process.on('unhandledRejection', (error: Error) => {
 process.on('uncaughtException', (error: Error) => {
 	log.error(`❎ uncaughtException :  ${error.stack}`)
 })
+
+export = app

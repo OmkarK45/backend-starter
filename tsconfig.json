@@ -1,6 +1,6 @@
 {
    "compilerOptions": {
-     "target": "es6",
+     "target": "es5",
      "module": "commonjs",
      "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
      "sourceMap": true,
@@ -20,7 +20,7 @@
      "strict": true
      
    },
-   "exclude": ["node_modules"],
+   "exclude": ["node_modules", "bin", "next-app"],
    "include": ["./**/*.ts"],
    "typeRoots": ["./node_modules/@types", "./src/types"]
  }

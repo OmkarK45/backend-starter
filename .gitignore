@@ -3,3 +3,4 @@ node_modules
 logs
 .DS_Store
 dist
+next-app/node_modules
